@@ -54,7 +54,7 @@ class UserController extends Controller
 
     public function get(Request $request): JsonResponse
     {
-        $result = $this->userService->findUsers($request->get('per_page'), $request->get('page'));
+        $result = $this->userService->findUsers($request->get('page', 1));
 
         return $this->buildResponse(
             __('message.user.created_successfully'),

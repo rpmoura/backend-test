@@ -29,8 +29,8 @@ class UserService implements UserServiceInterface
         throw new NotFoundHttpException(__('exception.user.not_found'));
     }
 
-    public function findUsers(int $perPage = 10, int $page = 1): LengthAwarePaginator
+    public function findUsers(int $page = 1): LengthAwarePaginator
     {
-        return $this->userRepository->where()->paginate($perPage, ['*'], 'page', $page);
+        return $this->userRepository->where()->paginate(page: $page);
     }
 }
