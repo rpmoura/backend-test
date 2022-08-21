@@ -12,6 +12,6 @@ class ExternalNotification implements ExternalNotificationInterface
 
     public function sendNotification(): ?array
     {
-        return $this->httpClient->post('/notifyy');
+        return $this->httpClient->post('/notify');
     }
 }
