@@ -2,7 +2,14 @@
 
 namespace App\Exceptions;
 
+use HttpResponseException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,15 +43,28 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
-     */
-    public function register()
+    public function report(Throwable $exception)
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        parent::report($exception);
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        return match (true) {
+            $exception instanceof AccessDeniedHttpException,
+            $exception instanceof HttpResponseException,
+            $exception instanceof BadRequestHttpException,
+            $exception instanceof NotFoundHttpException,
+            $exception instanceof UnauthorizedHttpException,
+            $exception instanceof InvalidArgumentException,
+            $exception instanceof MethodNotAllowedHttpException => response()->json(
+                [
+                    'type'    => 'error',
+                    'message' => $exception->getMessage() ?: trans('exception.method_not_allowed'),
+                ],
+                $exception->getStatusCode()
+            ),
+            default => parent::render($request, $exception),
+        };
     }
 }
