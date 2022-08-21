@@ -18,5 +18,6 @@ Route::namespace('V1')->prefix('v1')->group(
     function () {
         require base_path('routes/api/v1/auth.php');
         require base_path('routes/api/v1/user.php');
+        require base_path('routes/api/v1/transfer.php');
     }
 );
