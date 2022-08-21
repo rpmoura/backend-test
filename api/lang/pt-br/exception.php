@@ -3,7 +3,8 @@
 return [
     'auth'     => [
         'unauthorized' => 'Usuário não possui permissão para realizar essa operação.',
-        'no_session'   => 'Usuário não está autenticado.'
+        'no_session'   => 'Usuário não está autenticado.',
+        'credentials'  => 'Usuário e/ou senha incorreto.',
     ],
     'user'     => [
         'not_found' => 'Usuário não encontrado.',

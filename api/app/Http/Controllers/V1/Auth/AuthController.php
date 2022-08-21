@@ -28,7 +28,7 @@ class AuthController extends Controller
 
                 return $this->buildResponse(__('auth.successfully'), new AuthResource($data), Response::HTTP_OK);
             }
-            throw new UnauthorizedHttpException('', __('exception.auth.unauthorized'));
+            throw new UnauthorizedHttpException('', __('exception.auth.credentials'));
         } catch (UnauthorizedHttpException $exception) {
             return $this->buildResponseError($exception, Response::HTTP_UNAUTHORIZED);
         }
