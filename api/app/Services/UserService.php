@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserService implements UserServiceInterface
@@ -29,8 +29,8 @@ class UserService implements UserServiceInterface
         throw new NotFoundHttpException(__('exception.user.not_found'));
     }
 
-    public function findUsers(): Builder
+    public function findUsers(int $perPage = 10, int $page = 1): LengthAwarePaginator
     {
-        return $this->userRepository->where();
+        return $this->userRepository->where()->paginate($perPage, ['*'], 'page', $page);
     }
 }
