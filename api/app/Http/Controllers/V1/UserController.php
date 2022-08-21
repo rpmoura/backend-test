@@ -5,11 +5,12 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserResourceCollection;
 use App\Http\Resources\WalletResource;
-use Illuminate\Http\Request;
 use App\Services\Interfaces\{UserServiceInterface, WalletServiceInterface};
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -58,7 +59,7 @@ class UserController extends Controller
         return $this->buildResponse(
             __('message.user.created_successfully'),
             [
-               'users' => $result->toArray()
+               'users' => new UserResourceCollection($result),
             ],
             Response::HTTP_CREATED
         );
