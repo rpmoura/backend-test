@@ -7,7 +7,6 @@ RUN apt-get update && apt-get upgrade -y \
     libpng-dev \
     libxml2-dev
 
-
 ## ZIP
 RUN apt-get install -y \
     libzip-dev \
@@ -19,7 +18,6 @@ RUN docker-php-ext-install pdo
 RUN docker-php-ext-install pdo pdo_mysql
 
 ## LIBS
-#RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install dom
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install iconv
@@ -32,7 +30,8 @@ RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 RUN echo "xdebug.mode=debug\n" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.start_with_request=yes\n" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini
+RUN echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/xdebug.ini
+RUN echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini
 RUN echo "xdebug.remote_handler=dbgp\n" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.mode=develop,coverage,debug,gcstats,profile,trace" >> /usr/local/etc/php/conf.d/xdebug.ini
 RUN echo "xdebug.max_nesting_level=1024\n" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
@@ -49,7 +48,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN apt install wget -y
 
+## GIT
 RUN apt install git -y
+
+## PHP HTTP
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && install-php-extensions http
 
 RUN groupadd dev -g 999
 RUN useradd dev -g dev -d /home/dev -m

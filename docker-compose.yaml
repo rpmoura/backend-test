@@ -5,6 +5,7 @@ services:
     build:
       context: ./docker/php
       dockerfile: Dockerfile
+    image: picpay-api:latest
     container_name: picpay-api
     working_dir: /var/www/
     volumes:
@@ -13,6 +14,18 @@ services:
       - picpay-network
     depends_on:
       - mysql
+
+ php-queue:
+      image: picpay-api:latest
+      container_name: picpay-queue
+      command: ["php", "/var/www/artisan", "queue:work", "--daemon", "--sleep=3", "--tries=3"]
+      restart: always
+      volumes:
+        - ./api:/var/www/
+      networks:
+        - picpay-network
+      depends_on:
+        - api
 
  mysql:
     image: mysql:5.7
