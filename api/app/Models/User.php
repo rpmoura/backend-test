@@ -41,6 +41,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function setPasswordAttribute(string $password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
     public function wallet(): HasOne
     {
         return $this->hasOne(Wallet::class, 'user_id', 'id');
