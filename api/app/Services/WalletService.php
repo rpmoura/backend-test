@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Repositories\Interfaces\WalletRepositoryInterface;
+use App\Rules\Transfer\AuthorizeTransfer;
+use App\Rules\Transfer\ValidateFunds;
 use App\Services\Interfaces\WalletServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -33,8 +35,16 @@ class WalletService implements WalletServiceInterface
         throw new NotFoundHttpException(__('exception.wallet.not_found'));
     }
 
+    private function validateTransfer(array $attributes): void
+    {
+        $validator = new AuthorizeTransfer(new ValidateFunds());
+        $validator->handle($attributes);
+    }
+
     public function completeTransfer(array $attributes): Wallet
     {
+        $this->validateTransfer($attributes);
+
         $payerWallet = $attributes['payer_wallet'];
         $payeeWallet = $attributes['payee_wallet'];
         $amount      = $attributes['amount'];

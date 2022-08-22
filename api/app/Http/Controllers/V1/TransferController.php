@@ -46,8 +46,6 @@ class TransferController extends Controller
                 'amount'       => $validated['amount']
             ];
 
-            $this->transferService->validateTransfer($transferData);
-
             $payerWallet = $this->walletService->completeTransfer($transferData);
 
             DB::commit();
