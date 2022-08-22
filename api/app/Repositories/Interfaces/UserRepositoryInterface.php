@@ -9,7 +9,7 @@ interface UserRepositoryInterface
 {
     public function findUserBy(string $key, int|string $value): ?User;
 
-    public function create(array $attributes): User;
+    public function createUser(array $attributes): User;
 
-    public function where(array $conditions): Builder;
+    public function findUsers(array $conditions): Builder;
 }

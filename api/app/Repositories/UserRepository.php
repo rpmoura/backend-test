@@ -16,12 +16,12 @@ class UserRepository implements UserRepositoryInterface
         return User::query()->where($key, $value)->get()->first();
     }
 
-    public function create(array $attributes): User
+    public function createUser(array $attributes): User
     {
         return User::create($attributes);
     }
 
-    public function where(?array $conditions = null): Builder
+    public function findUsers(?array $conditions = null): Builder
     {
         return User::query()->where($conditions);
     }

@@ -15,7 +15,7 @@ class UserService implements UserServiceInterface
 
     public function create(array $attributes): User
     {
-        return $this->userRepository->create($attributes);
+        return $this->userRepository->createUser($attributes);
     }
 
     public function findUserByUuid(string $uuid): User
@@ -31,6 +31,6 @@ class UserService implements UserServiceInterface
 
     public function findUsers(int $page = 1): LengthAwarePaginator
     {
-        return $this->userRepository->where()->paginate(page: $page);
+        return $this->userRepository->findUsers()->paginate(page: $page);
     }
 }
