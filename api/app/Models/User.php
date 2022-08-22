@@ -37,13 +37,17 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
     public function setPasswordAttribute(string $password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function setCpfCnpjAttribute(string $cpfCnpj)
+    {
+        $this->attributes['cpf_cnpj'] = preg_replace('/[^0-9]/', '', $cpfCnpj);
     }
 
     public function wallet(): HasOne
