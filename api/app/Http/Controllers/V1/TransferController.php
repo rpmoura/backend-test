@@ -56,7 +56,8 @@ class TransferController extends Controller
 
             return $this->buildResponse(
                 __('message.transfer.successfully'),
-                ['wallet' => new WalletResource($payerWallet)]
+                ['wallet' => new WalletResource($payerWallet)],
+                Response::HTTP_CREATED
             );
         } catch (UnauthorizedTransferException | InsufficientFundsException $exception) {
             DB::rollBack();

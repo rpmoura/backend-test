@@ -26,11 +26,12 @@ class Controller extends BaseController
 
     protected function buildResponseError($exception, int $codeStatus): JsonResponse
     {
-        $field   = null;
-        $message = $exception->getMessage();
+        $field = null;
         if (method_exists($exception, 'getMessageBag')) {
             $message = $exception->getMessageBag()->first();
             $field   = $exception->getMessageBag()->keys()[0];
+        } else {
+            $message = $exception->getMessage();
         }
 
         $data = method_exists($exception, 'getParams') ? $exception->getParams() : null;
