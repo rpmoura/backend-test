@@ -8,7 +8,7 @@ use App\Exceptions\UnauthorizedTransferException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TransferRequest;
 use App\Http\Resources\WalletResource;
-use App\Services\Interfaces\{TransferServiceInterface, UserServiceInterface, WalletServiceInterface};
+use App\Services\Interfaces\{UserServiceInterface, WalletServiceInterface};
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 class TransferController extends Controller
 {
     public function __construct(
-        protected TransferServiceInterface $transferService,
         protected WalletServiceInterface $walletService,
         protected UserServiceInterface $userService
     ) {}
