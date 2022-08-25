@@ -26,5 +26,4 @@
     <exclude-pattern>*config/*</exclude-pattern>
     <exclude-pattern>*bootstrap/*</exclude-pattern>
     <exclude-pattern>*database/*</exclude-pattern>
-    <exclude-pattern>*tests/*</exclude-pattern>
 </ruleset>
