@@ -20,7 +20,7 @@ class AuthController extends Controller
                 /** @var User $user */
                 $user = auth()->user();
                 // TODO mover para camada de serviço
-                $permission = $user->type == UserTypeEnum::COMMON ? 'can-transfer' : '';
+                $permission = $user->type == UserTypeEnum::COMMON->value ? 'can-transfer' : '';
                 $data       = (object)[
                     'token' => $user->createToken('auth_token', [$permission])->plainTextToken,
                     'user'  => $user,
